@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>DA PA Checker Bulk Tool</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container">
-    <h1 class="text-center">DA PA Checker Bulk Tool</h1><br><br>
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">DA PA Checker Tool</h1><br><br>
     <form action="/" method="post">
         <label for="textArea">Enter Domains:</label><br><br>
         <textarea id="textArea" name="textArea" rows="4" cols="50" class="form-control"></textarea><br><br>
@@ -19,27 +15,27 @@
     {% if response %}
     <table class="table table-dark table-striped rounded">
         <thead>
-            <tr>
-                <th scope="col">Domain</th>
-                <th scope="col">Site DA</th>
-                <th scope="col">external_nofollow_urls_to_url</th>
-                 <th scope="col">external_urls_to_url</th>
-                <th scope="col">Spam Score</th>
-            </tr>
+        <tr>
+            <th scope="col">Domain</th>
+            <th scope="col">Site DA</th>
+            <th scope="col">external_nofollow_urls_to_url</th>
+            <th scope="col">external_urls_to_url</th>
+            <th scope="col">Spam Score</th>
+        </tr>
         </thead>
         <tbody>
-            {% for item in response %}
-                <tr>
-                    <td>{{ item['domain'] }}</td>
-                    <td>{{ item['domain_authority'] }}</td>
-                    <td>{{ item['external_nofollow_urls_to_url'] }}</td>
-                    <td>{{ item['external_urls_to_url'] }}</td>
-                    <td>{{ item['spam_score'] }}</td>
-                </tr>
-            {% endfor %}
+        {% for item in response %}
+        <tr>
+            <td>{{ item['domain'] }}</td>
+            <td>{{ item['domain_authority'] }}</td>
+            <td>{{ item['external_nofollow_urls_to_url'] }}</td>
+            <td>{{ item['external_urls_to_url'] }}</td>
+            <td>{{ item['spam_score'] }}</td>
+        </tr>
+        {% endfor %}
         </tbody>
     </table>
     {% endif %}
-        </div>
-</body>
-</html>
+</div>
+{% endblock %}
+

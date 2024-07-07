@@ -1,0 +1,39 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+
+        </div>
+        <div class="col">
+            <h1>Results</h1>
+    <table border="1" class="table">
+        <tr>
+            <th>Domain</th>
+            <th>Keywords</th>
+            <th>Traffic</th>
+            <th>Costs</th>
+            <th>Rank</th>
+        </tr>
+        {% for result in results %}
+        <tr>
+            <td>{{ result.domain }}</td>
+            <td>{{ result.keywords }}</td>
+            <td>{{ result.traffic }}</td>
+            <td>{{ result.costs }}</td>
+            <td>{{ result.rank }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">No results found</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/semrush-bulk/" class="btn btn-secondary">Go back</a>
+        </div>
+        <div class="col"></div>
+    </div>
+    {% endblock %}
+

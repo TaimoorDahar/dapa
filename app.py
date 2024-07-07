@@ -2,7 +2,7 @@ import json
 from flask import Flask, request, render_template
 import requests
 from fake_useragent import UserAgent
-
+import xml.etree.ElementTree as ET
 ua = UserAgent()
 random_user_agent = ua.random
 app = Flask(__name__)
@@ -191,5 +191,47 @@ def keyword_process():
 @app.route('/keyword-volume/')
 def keywords():
     return render_template('keyword-volume.html', response=[], links=[])
+
+
+@app.route('/semrush-bulk/', methods=['GET'])
+def semrush_bulk():
+    return render_template('semrush.html')
+
+
+@app.route('/check_domains', methods=['POST'])
+def check_domains():
+    domains = request.form.get('domains').split()
+    results = []
+
+    headers = {
+        'accept': '*/*',
+        'accept-language': 'en-US,en;q=0.9',
+        'cookie': 'ref_code=__default__; refer_source=""; cookiehub=eyJhbnN3ZXJlZCI6ZmFsc2UsInJldmlzaW9uIjoxLCJkbnQiOmZhbHNlLCJhbGxvd1NhbGUiOnRydWUsImltcGxpY3QiOnRydWUsInJlZ2lvbiI6IkcwIiwidG9rZW4iOiJEeWdhSGMzM0dlcWlTUTNqNGVtSTBrRmQ0a3VzSDJnemw0QWdwREl0SFd4REZLRzE3ekV1V2E1bXRsU2M0ajJLIiwidGltZXN0YW1wIjoiMjAyMy0xMS0yN1QxNDo1Mjo1NC43NjhaIiwiYWxsQWxsb3dlZCI6dHJ1ZSwiY2F0ZWdvcmllcyI6W10sInZlbmRvcnMiOltdLCJzZXJ2aWNlcyI6W119; _mkto_trk=id:519-IIY-869&token:_mch-semrush.com-1701096776566-16378; _tt_enable_cookie=1; _ttp=R-npYYfWtZMXs46e4eWjhV0NPpr; PHPSESSID=815b81b3d946c7f93e4e554a1101d5cd; SSO-JWT=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MTViODFiM2Q5NDZjN2Y5M2U0ZTU1NGExMTAxZDVjZCIsImlhdCI6MTcwMTA5Njc4NiwiaXNzIjoic3NvIiwidWlkIjoxODI0MTUzOH0.Mr14ut2ZfYenpO3TVPpgs_oTc9G5aoWIsljnpUJvdSWptumSoEmtZ3pqUc0qZwNYoLsPe2UZ4gKjNb1kCOVp8Q; sso_token=b6df251f6ec10a5fa4640ee2fef15938fd87cd3822e5e9c4ff261fc22eb49e96; _uetvid=a6009fc08d3411ee8e29271c28c3a2e0|3tasoo|1701096794111|2|1|bat.bing.com/p/insights/c/o; _ga_HYWKMHR981=GS1.1.1701096774.1.1.1701096796.39.0.0; _ga_BPNLXP3JQG=GS1.1.1701096774.1.1.1701096796.0.0.0; _ga=GA1.2.1013714350.1701096775',
+        'priority': 'u=1, i',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'none',
+        'user-agent': random_user_agent,
+    }
+
+    for domain in domains:
+        url = f"https://seoquake.publicapi.semrush.com/info.php?url={domain}"
+        response = requests.get(url, headers=headers)
+        
+        if response.status_code == 200:
+            root = ET.fromstring(response.text)
+            data = {
+                'domain': domain,
+                'keywords': root.findtext('keywords'),
+                'traffic': root.findtext('traffic'),
+                'costs': root.findtext('costs'),
+                'rank': root.findtext('rank'),
+            }
+            results.append(data)
+        else:
+            results.append({'domain': domain, 'error': 'Failed to fetch data'})
+    
+    return render_template('results.html', results=results)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8003)

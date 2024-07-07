@@ -1,0 +1,24 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col">
+        <h1>Enter Domains to Check</h1>
+        <form action="/check_domains" method="post">
+            <textarea name="domains" rows="10" cols="50" class="form-control"></textarea><br>
+            <input type="submit" value="Check Domains" class="btn btn-primary">
+        </form>
+    </div>
+    <div class="col">
+
+    </div>
+</div>
+
+{% endblock %}

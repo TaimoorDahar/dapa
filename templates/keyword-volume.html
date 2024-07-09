@@ -26,51 +26,49 @@
 
     </div>
     <div class="row">
-        <div class="col"></div>
+
         <div class="col">
             {% if keyword_info %}
-            <table class="bordered-table">
-                <thead>
-                    <tr border="1">
-                        <th scope="col">Field</th>
-                        <th scope="col">Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">Keyword</th>
-                        <td>{{ keyword_info['keyword'] }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Competition</th>
-                        <td>{{ keyword_info['competition'] }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Volume</th>
-                        <td>{{ keyword_info['volume'] }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">CPC</th>
-                        <td>{{ keyword_info['cpc'] }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">CPC in Dollars</th>
-                        <td>{{ keyword_info['cpcDollars'] }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">SD</th>
-                        <td>{{ keyword_info['sd'] }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Updated At</th>
-                        <td>{{ keyword_info['updated_at'] }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        {% else %}
 
-        {% endif %}</div>
-        <div class="col"></div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3>Keyword Overview: {{ keyword_info['keyword'] }}</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <div class="info-box">
+                                <h5>Total Volume</h5>
+                                <div class="value">{{ keyword_info['volume'] }}</div>
+                          
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="info-box">
+                                <h5>SEO Difficulty</h5>
+                                <div class="value">{{ keyword_info['competition'] }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="info-box">
+                                <h5>Paid Difficulty</h5>
+                                <div class="value">{{ keyword_info['paid_difficulty'] }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="info-box">
+                                <h5>Cost Per Click (CPC)</h5>
+                                <div class="value">{{ keyword_info['cpcDollars'] }}</div>
+                                <div class="label">DOLLARS</div>
+                            </div>
+                        </div>
+                    </div>
+       
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+                No keyword information available.
+            </div>
+            {% endif %}            
+   
+        
     </div>
     </div>
 

@@ -152,24 +152,24 @@ def keyword_process():
     keyword = request.form['keyword']
     import requests
 
-    url = f"https://app.neilpatel.com/api/keyword_info?keyword={keyword}&language=en&locId=2586"
-    token = token_auth()
+    url = f"https://app.neilpatel.com/api/keyword_info?keyword={keyword}&language=en"
+
     payload = {}
     headers = {
-        'accept': 'application/json, text/plain, */*',
-        'accept-language': 'en-US,en;q=0.9',
-        'authorization': f'Bearer {token}',
-        'cookie': '__cf_bm=gaksL2RX.2qPupgn.Yq0aJTZi0oPZHB67u1lxWLz2Bg-1715717828-1.0.1.1-7HtccVejf3bocnLbbK0lS.wjWJ_hBOgYjPlj.OQEeeQs6JvQHIqyGTEBepmb0Svi9A7OF._rwBjnTjRV1FQD.Q; mutiny.user.token=927ed82b-3eea-496b-a8bb-9cbbbfb01398; mutiny.user.token=927ed82b-3eea-496b-a8bb-9cbbbfb01398; mutiny.user.session=7f73d3e7-6832-4017-a9b2-7bb82d9dd78d; mutiny.user.session=7f73d3e7-6832-4017-a9b2-7bb82d9dd78d; mutiny.user.session_number=1; mutiny.user.session_number=1; km_ai=58dBRjY%2FCpZncxIdvIYFkuLIfEs%3D; km_vs=1; _vwo_uuid_v2=D7CC0651439E8CF8D7A0280EDA53118D1|bc1427bd640a33470c8a9a11fa5de447; _gid=GA1.2.543291984.1715717916; _gcl_au=1.1.1507286845.1715717916; _clck=1g0hpt2%7C2%7Cflr%7C0%7C1595; _tt_enable_cookie=1; _ttp=OIEBkClNh2QXS0gkzaK6g1dOrX6; __hstc=240018588.fbbceb1a20e5d53ea84b7a25ee2a9882.1715717922556.1715717922556.1715717922556.1; hubspotutk=fbbceb1a20e5d53ea84b7a25ee2a9882; __hssrc=1; __zlcmid=1LlmicI7tS6fezV; state="eyJuZXh0IjoiL2VuL3RyYWZmaWNfYW5hbHl6ZXIvb3ZlcnZpZXc_ZG9tYWluPWpjcnZpcy5jb20ucGsmbGFuZz1lbiZsb2NJZD0yODQwJm1vZGU9ZG9tYWluIiwicmVmZXJyZXJfaG9zdCI6Imh0dHBzOi8vYXBwLm5laWxwYXRlbC5jb20ifQ=="; id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTA4Nzk5Njc3NjM5ODU0MjE1MDgzIiwiZXhwIjoxNzE1ODkxMjI1fQ.eKwLQnFANHp9-U5HJJMUa_kiJPCcSLYgllR7Zvfcdqo; kvcd=1715718429451; km_lv=1715718429; km_ni=muhammadtaimur142%40gmail.com; mp_0f47aae0dbedc03b9054b3be104ea557_mixpanel=%7B%22distinct_id%22%3A%20%22muhammadtaimur142%40gmail.com%22%2C%22%24device_id%22%3A%20%2218f78c1ab91d3f-02d1da4b072c75-76574611-140000-18f78c1ab92d40%22%2C%22%24initial_referrer%22%3A%20%22https%3A%2F%2Fneilpatel.com%2F%22%2C%22%24initial_referring_domain%22%3A%20%22neilpatel.com%22%2C%22%24user_id%22%3A%20%22muhammadtaimur142%40gmail.com%22%7D; _uetsid=23ada280122f11ef82968905aacb502f; _uetvid=23ae9cb0122f11ef92fab31b2018b3bc; _ga=GA1.2.491695115.1715717913; __hssc=240018588.2.1715717922558; amp_276990=lsF0XWm0GS2GUUf7zD3ELv.MTA4Nzk5Njc3NjM5ODU0MjE1MDgz..1htsc3ap9.1htsckoil.1.0.1; _ga_6QNYJFNF1D=GS1.1.1715717913.1.1.1715718501.60.0.0; _ga_PE1RZ8MRZD=GS1.1.1715717913.1.1.1715718979.60.0.0; _gat_UA-16137731-1=1; _clsk=1rku9lw%7C1715718982809%7C5%7C1%7Cv.clarity.ms%2Fcollect',
-        'priority': 'u=1, i',
-        'referer': 'https://app.neilpatel.com/en/ubersuggest/overview?ai-keyword=ke%20duplicate%20bill&keyword=ke%20duplicate%20bill&lang=en&locId=2586&mode=keyword',
-        'sec-ch-ua': '"Chromium";v="124", "Microsoft Edge";v="124", "Not-A.Brand";v="99"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"Linux"',
-        'sec-fetch-dest': 'empty',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-site': 'same-origin',
-        'ts': '1715718982',
-        'user-agent': random_user_agent,
+    'accept': 'application/json, text/plain, */*',
+    'accept-language': 'en-US,en;q=0.9',
+    'authorization': 'Bearer app#unlogged__c4925975c21e551850089bad462a0e45ad65c002',
+    'cookie': 'lifetime_offer_until=2024-05-17T12:16:26+00:00; mutiny.user.token=8df08f9d-50da-4fdd-b2a5-a5d5d58976d0; _vwo_uuid_v2=DAE5A4348F2C27F5020B3F5683F2A94F3|5233b40431339d98d245162cb5e79bbb; __cf_bm=jvVFSvQsScK3Xv49xMlWt4bdlssH885QP5kTf97uy8k-1720545455-1.0.1.1-agx.il_ZJCKkmkZNMbwYCSVdRvHH64_2YzxnUVsatDuW4.ZvibOrjtwoaUZr3mmJaKSEHKrC3S1o61chGCoFpQ; mutiny.user.session=505a831b-4bec-49cd-8252-95e458d1591d; mutiny.user.session_number=3; _gid=GA1.2.1685844522.1720545462; _gat_UA-16137731-1=1; km_ai=BML%2F3ntIZUfO0TdECxJxcxBstxo%3D; km_vs=1; _tt_enable_cookie=1; _ttp=hfMSqhXEhr-ZoALlsl4Su1mJ5L6; _clck=3k1wxa%7C2%7Cfnb%7C0%7C1651; __zlcmid=1Mfmr7Eu2m4RA4l; mutiny.user.session_number=3; _gcl_au=1.1.9063481.1720545470; state="eyJuZXh0IjoiaHR0cHM6Ly9hcHAubmVpbHBhdGVsLmNvbS9lbi9sb2dpbiIsInJlZmVycmVyX2hvc3QiOiJodHRwczovL2FwcC5uZWlscGF0ZWwuY29tIn0="; id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTA4Nzk5Njc3NjM5ODU0MjE1MDgzIiwiZXhwIjoxNzIwNzE4Mjc0fQ.BhPr5i3TkYE8V5R7NvaJHr7xhTHdHvXLU9Zr4svfyuA; __hstc=240018588.f621e2eb29267bc53b98ae8879270427.1720545476009.1720545476009.1720545476009.1; hubspotutk=f621e2eb29267bc53b98ae8879270427; __hssrc=1; kvcd=1720545476667; km_lv=1720545477; _uetsid=26e980803e1711ef913935337d7f4ff4; _uetvid=f7894e80190811efb01e9786734665e6; _ga=GA1.2.2080131192.1716471178; __hssc=240018588.2.1720545476009; km_ni=muhammadtaimur142%40gmail.com; mp_0f47aae0dbedc03b9054b3be104ea557_mixpanel=%7B%22distinct_id%22%3A%20%22muhammadtaimur142%40gmail.com%22%2C%22%24device_id%22%3A%20%2219098806460868-09c71270bab59e-11462c6f-140000-19098806460868%22%2C%22%24initial_referrer%22%3A%20%22https%3A%2F%2Fapp.neilpatel.com%2Fen%2Flogin%22%2C%22%24initial_referring_domain%22%3A%20%22app.neilpatel.com%22%2C%22%24user_id%22%3A%20%22muhammadtaimur142%40gmail.com%22%7D; amp_276990=9u5VaQGtmMmkT1R0Luao1D.MTA4Nzk5Njc3NjM5ODU0MjE1MDgz..1i2c80k32.1i2c81ce6.2.0.2; _clsk=o0iei3%7C1720545490607%7C3%7C1%7Co.clarity.ms%2Fcollect; _ga_6QNYJFNF1D=GS1.1.1720545462.3.1.1720545521.1.0.0; _ga_PE1RZ8MRZD=GS1.1.1720545461.3.1.1720545521.60.0.0',
+    'priority': 'u=1, i',
+    'referer': 'https://app.neilpatel.com/en/ubersuggest/overview?ai-keyword=deezer%20premium%20apk&keyword=deezer%20premium%20apk&lang=en&locId=0000&mode=keyword',
+    'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Linux"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'ts': '1720545521',
+    'user-agent': random_user_agent
     }
 
     response = requests.request("GET", url, headers=headers, data=payload)

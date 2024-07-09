@@ -1,5 +1,5 @@
 import json
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template,jsonify
 import requests
 from fake_useragent import UserAgent
 import xml.etree.ElementTree as ET
@@ -232,6 +232,38 @@ def check_domains():
             results.append({'domain': domain, 'error': 'Failed to fetch data'})
     
     return render_template('results.html', results=results)
+
+@app.route('/similarweb-data', methods=['GET'])
+def get_similarweb_data():
+    domain = request.args.get('domain')
+    
+    if not domain:
+        return jsonify({'error': 'Domain parameter is required'}), 400
+    
+    url = f"https://data.similarweb.com/api/v1/data?domain={domain}"
+    headers = {
+        'accept': '*/*',
+        'accept-language': 'en-US,en;q=0.9',
+        'content-type': 'application/json',
+        'priority': 'u=1, i',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'none',
+        'user-agent': random_user_agent,
+        'x-extension-version': '6.11.5'
+    }
+
+    params = {
+        'domain': domain
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+    
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return jsonify({'error': 'Failed to fetch data'}), response.status_code
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8003)

@@ -7,6 +7,15 @@ ua = UserAgent()
 random_user_agent = ua.random
 app = Flask(__name__)
 
+
+# Define the custom filter
+def intcomma(value):
+    return "{:,}".format(value)
+
+# Register the filter
+app.jinja_env.filters['intcomma'] = intcomma
+
+
 session_cookies = None
 
 def get_csrf_token(session):

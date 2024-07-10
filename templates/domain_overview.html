@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Domain OverView</h1><br><br>
+
+    <br><br>
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        <form action="/domain-overview/" method="post">
+            <input class="form-control" type="text" placeholder="Enter Domain" aria-label="default input example"
+                   name="domain">
+            <br>
+            <div class="text-center">
+                <input type="submit" value="Submit" class="btn btn-primary">
+                <br><br>
+            </div>
+        </form>
+    </div>
+    <div class="col"></div>
+</div>
+
+
+    <div class="row">
+        <div class="col">
+            {% if domain_info %}
+
+            <div class="row">
+
+
+
+
+
+                <div class="col-md-3 mb-3">
+                    <div class="info-box">
+                        <h5>Domain Authority</h5>
+                        <div class="value">{{ domain_info.domainAuthority }}</div>
+                  
+                    </div>
+                </div>
+            
+                <div class="col-md-3 mb-3">
+                    <div class="info-box">
+                        <h5>Backlinks</h5>
+                        <div class="value">{{ domain_info.backlinks }}</div>
+                  
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 mb-3">
+                    <div class="info-box">
+                        <h5>Ref Domains</h5>
+                        <div class="value">{{ domain_info.refDomains }}</div>
+                  
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="info-box">
+                        <h5>Ref Domains GovEdu</h5>
+                        <div class="value">{{ domain_info.refDomainsGovEdu }}</div>
+                  
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="info-box">
+                        <h5>Do Follows</h5>
+                        <div class="value">{{ domain_info.follow }}</div>
+                  
+                    </div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <div class="info-box">
+                        <h5>No Follows</h5>
+                        <div class="value">{{ domain_info.noFollow }}</div>
+                  
+                    </div>
+                </div>
+
+</div>
+
+            {% else %}
+
+            {% endif %}         
+
+
+
+        </div>
+        </div>
+
+</div>
+
+    {% endblock %}

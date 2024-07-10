@@ -274,5 +274,48 @@ def get_similarweb_data():
         return jsonify({'error': 'Failed to fetch data'}), response.status_code
 
 
+@app.route('/domain-overview/', methods=['GET', 'POST'])
+def domain_overview():
+    if request.method == 'POST':
+        domain = request.form.get('domain')
+        if not domain:
+            return jsonify({'error': 'No domain provided'}), 400
+
+        url = f"https://app.neilpatel.com/api/backlinks_overview?domain={domain}&mode=domain"
+        token = token_auth()  # Assuming token_auth() is defined elsewhere and returns a valid token
+        headers = {
+            'accept': 'application/json, text/plain, */*',
+            'accept-language': 'en-US,en;q=0.9',
+            'authorization': f'Bearer {token}',
+            'cookie': 'lifetime_offer_until=2024-05-17T12:16:26+00:00; mutiny.user.token=8df08f9d-50da-4fdd-b2a5-a5d5d58976d0; _vwo_uuid_v2=DAE5A4348F2C27F5020B3F5683F2A94F3|5233b40431339d98d245162cb5e79bbb; id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTA4Nzk5Njc3NjM5ODU0MjE1MDgzIiwiZXhwIjoxNzIwNzE4Mjc0fQ.BhPr5i3TkYE8V5R7NvaJHr7xhTHdHvXLU9Zr4svfyuA; __cf_bm=_zwbYDDsl_BkbgnDDrOZVfQkd7NwbZ5QCNrcJ2yAJS0-1720648830-1.0.1.1-U7mJkST6sw0mlrZ87A4Cld5E9Wosh1x2pT02j9v_R5PkuPwHd4U9.2iraNpJBunDM3IF8CFQqN57UU3fZek.qw; mutiny.user.session=fca3f675-7e77-4b6c-a806-9f08421a3463; _gid=GA1.2.993443935.1720648835; mutiny.user.session_number=4; mutiny.user.session_number=4; _uetsid=d622f9b03f0711ef8c7c49a1d2a1af63; _uetvid=f7894e80190811efb01e9786734665e6; km_ni=muhammadtaimur142%40gmail.com; mp_0f47aae0dbedc03b9054b3be104ea557_mixpanel=%7B%22distinct_id%22%3A%20%22muhammadtaimur142%40gmail.com%22%2C%22%24device_id%22%3A%20%221909ea9a0566f0-0e67723266eaa1-11462c6f-140000-1909ea9a0566f0%22%2C%22%24initial_referrer%22%3A%20%22https%3A%2F%2Fneilpatel.com%2F%22%2C%22%24initial_referring_domain%22%3A%20%22neilpatel.com%22%2C%22%24user_id%22%3A%20%22muhammadtaimur142%40gmail.com%22%7D; _clck=1oqmfbi%7C2%7Cfnc%7C0%7C1652; _ga=GA1.2.2080131192.1716471178; _tt_enable_cookie=1; _ttp=ZyKcbwuKSC7DtJkLiidjU0J1knu; _gcl_au=1.1.860658008.1720648838; __hstc=240018588.ca66c584935fe2e9cfff543f89229cbe.1720648838729.1720648838729.1720648838729.1; hubspotutk=ca66c584935fe2e9cfff543f89229cbe; __hssrc=1; __hssc=240018588.1.1720648838729; __zlcmid=1MgmrIWTX2nl14F; _gat_UA-16137731-1=1; amp_276990=r-ooxscRrHTPZcs12_JEhk.MTA4Nzk5Njc3NjM5ODU0MjE1MDgz..1i2faj820.1i2fals8l.c.0.c; _clsk=1re8hft%7C1720648922015%7C16%7C1%7Co.clarity.ms%2Fcollect; _ga_6QNYJFNF1D=GS1.1.1720648836.4.1.1720648938.24.0.0; _ga_PE1RZ8MRZD=GS1.1.1720648834.4.1.1720648943.11.0.0',
+            'priority': 'u=1, i',
+            'referer': 'https://app.neilpatel.com/en/seo_analyzer/backlinks?domain=keduplicatebill.com.pk&lang=en&locId=2840&mode=domain',
+            'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Linux"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-origin',
+            'ts': '1720648943',
+            'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+        }
+
+        response = requests.get(url, headers=headers)
+
+        if response.status_code != 200:
+            print(f"Request failed: {response.status_code} - {response.text}")
+            return f"Request failed: {response.status_code}"
+
+        try:
+            response_data = response.json()
+           
+        except json.JSONDecodeError:
+            print(f"JSON decode error: {response.text}")
+            return f"Failed to decode JSON response: {response.text}"
+
+        return render_template('domain_overview.html', domain_info=response_data)
+    
+    return render_template('domain_overview.html')
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8003)

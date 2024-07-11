@@ -3,10 +3,11 @@ from flask import Flask, request, render_template,jsonify
 import requests
 from fake_useragent import UserAgent
 import xml.etree.ElementTree as ET
+from flask_cors import CORS
 ua = UserAgent()
 random_user_agent = ua.random
 app = Flask(__name__)
-
+CORS(app)
 
 # Define the custom filter
 def intcomma(value):
@@ -309,7 +310,8 @@ def domain_overview():
 # Domain OverView API
 @app.route('/api-domain-overview/', methods=['POST'])
 def domain_overview_api():
-    domain = request.form.get('domain')
+    data = request.get_json()
+    domain = data.get('domain')
     if not domain:
         return jsonify({'error': 'No domain provided'}), 400
 

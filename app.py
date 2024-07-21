@@ -4,6 +4,8 @@ import requests
 from fake_useragent import UserAgent
 import xml.etree.ElementTree as ET
 from flask_cors import CORS
+from urllib.parse import urlparse
+
 ua = UserAgent()
 random_user_agent = ua.random
 app = Flask(__name__)
@@ -243,9 +245,8 @@ def check_domains():
     
     return render_template('results.html', results=results)
 
-@app.route('/similarweb-data', methods=['GET'])
-def get_similarweb_data():
-    domain = request.args.get('domain')
+
+def get_similarweb_data(domain):
     
     if not domain:
         return jsonify({'error': 'Domain parameter is required'}), 400
@@ -307,11 +308,23 @@ def domain_overview():
     
     return render_template('domain_overview.html')
 
+
+def format_number(number):
+    """Formats a number with commas or abbreviates it."""
+    if number >= 1_000_000:
+        return f"{number // 1_000_000}M"
+    elif number >= 1_000:
+        return f"{number // 1_000}K"
+    else:
+        return str(number)
 # Domain OverView API
 @app.route('/api-domain-overview/', methods=['POST'])
 def domain_overview_api():
+    alldata = {}
     data = request.get_json()
-    domain = data.get('domain')
+    url = data.get('domain')
+    parsed_url = urlparse(url)
+    domain = parsed_url.netloc
     if not domain:
         return jsonify({'error': 'No domain provided'}), 400
 
@@ -320,22 +333,38 @@ def domain_overview_api():
     headers = {
         'accept': 'application/json, text/plain, */*',
         'authorization': f'Bearer {token}',
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'user-agent': random_user_agent,
     }
 
     response = requests.get(url, headers=headers)
+    moz_data = response.json()
+
 
     if response.status_code != 200:
+
         print(f"Request failed: {response.status_code} - {response.text}")
         return jsonify({'error': f"Request failed: {response.status_code}", 'message': response.text}), response.status_code
 
     try:
-        response_data = response.json()
+        alldata = {
+            'da': format_number(moz_data['domainAuthority']),
+            'backlinks': format_number(moz_data['backlinks']),
+            'refDomains': format_number(moz_data['refDomains']),
+        }
+        similarweb_data = get_similarweb_data(domain)
+        similarweb_data = similarweb_data.data
+        decoded_data = similarweb_data.decode('utf-8')
+        similarweb_data = json.loads(decoded_data)
+        alldata.update({
+            'top_keywords': similarweb_data.get('TopKeywords', []),
+            'EstimatedMonthlyVisits': similarweb_data.get('EstimatedMonthlyVisits', {}),
+            'TrafficSources': similarweb_data.get('TrafficSources', {}),
+        })
     except json.JSONDecodeError:
         print(f"JSON decode error: {response.text}")
         return jsonify({'error': 'Failed to decode JSON response', 'message': response.text}), 500
 
-    return jsonify(response_data)
+    return jsonify(alldata)
 
 
 

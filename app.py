@@ -323,8 +323,11 @@ def domain_overview_api():
     alldata = {}
     data = request.get_json()
     url = data.get('domain')
+    if not url.startswith(('http://', 'https://')):
+        url = 'http://' + url
     parsed_url = urlparse(url)
     domain = parsed_url.netloc
+
     if not domain:
         return jsonify({'error': 'No domain provided'}), 400
 
